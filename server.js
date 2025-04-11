@@ -7,11 +7,25 @@ import sequelize from "./database.js";
 import userRoutes from "./routes/userRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
 import basketRoutes from "./routes/basketRoutes.js";
+import session from "express-session";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: process.env.ALLOWED_ORIGINS || "*" }));
+app.use(cors({ origin: "*" }));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true, // Prevents XSS attacks
+      sameSite: "Strict", // Prevents CSRF attacks
+      maxAge: 24 * 60 * 60 * 1000, // 1-day expiration for the session cookie
+    },
+  })
+);
 
 app.use(express.json());
 
