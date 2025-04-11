@@ -14,6 +14,7 @@ router.get("/basket", async (req, res) => {
         },
       },
     });
+    console.log("Basket items found:", basketItems);
     return res.status(200).json(basketItems);
   } catch (err) {
     res
