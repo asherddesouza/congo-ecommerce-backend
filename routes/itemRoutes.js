@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/items", async (req, res) => {
   try {
     const searchParam = req.query.search;
-    console.log("Search parameter received:", searchParam);
+    // console.log("Search parameter received:", searchParam);
 
     const results = await Item.findAll({
       where: {
@@ -32,7 +32,7 @@ router.get("/items", async (req, res) => {
       },
     });
 
-    console.log("Raw results:", results);
+    // console.log("Raw results:", results);
 
     const filteredResults = results.map((item) => item.dataValues);
 

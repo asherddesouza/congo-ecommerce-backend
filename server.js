@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -5,14 +6,18 @@ import express from "express";
 import sequelize from "./database.js";
 import userRoutes from "./routes/userRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
+import basketRoutes from "./routes/basketRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(cors({ origin: process.env.ALLOWED_ORIGINS || "*" }));
 
 app.use(express.json());
 
 app.use("/", userRoutes);
 app.use("/", itemRoutes);
+app.use("/", basketRoutes);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, "0.0.0.0", async () => {
